@@ -1,6 +1,7 @@
 ﻿using ASPNET7Proj1.Data;
 using ASPNET7Proj1.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASPNET7Proj1.Controllers
 {
@@ -18,34 +19,34 @@ namespace ASPNET7Proj1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddTagRequest addTagRequest)
+        public async Task<IActionResult> Add(AddTagRequest addTagRequest)
         {
             Models.Domain.Tags tag = new Models.Domain.Tags()
             {
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName
             };
-            bloggieDbContext.Tags.Add(tag);
-            bloggieDbContext.SaveChanges();
+            await bloggieDbContext.Tags.AddAsync(tag);
+            await bloggieDbContext.SaveChangesAsync();
             
 
             return RedirectToAction("List");
         }
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            List<Models.Domain.Tags> tags = bloggieDbContext.Tags.ToList();
+            List<Models.Domain.Tags> tags =await bloggieDbContext.Tags.ToListAsync();
 
             return View(tags);
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid Id)
+        public async Task<IActionResult> Edit(Guid Id)
         {
             //1 Method
             var exTag = bloggieDbContext.Tags.Find(Id);
             //2 Method
-            var tag = bloggieDbContext.Tags.FirstOrDefault(s=>s.Id== Id);
+            var tag =await bloggieDbContext.Tags.FirstOrDefaultAsync(s=>s.Id== Id);
             if (tag != null)
             {
                 var editTagRequest = new EditTagRequest()
@@ -60,7 +61,7 @@ namespace ASPNET7Proj1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EditTagRequest editTagRequest)
+        public async Task<IActionResult> Edit(EditTagRequest editTagRequest)
         {
             var tag = new Models.Domain.Tags
             {
@@ -68,7 +69,7 @@ namespace ASPNET7Proj1.Controllers
                 Name = editTagRequest.Name,
                 DisplayName = editTagRequest.DisplayName
             };
-            var ExistingTag = bloggieDbContext.Tags.FirstOrDefault(s => s.Id == tag.Id);
+            var ExistingTag = await bloggieDbContext.Tags.FirstOrDefaultAsync(s => s.Id == tag.Id);
 
             if(ExistingTag != null)
             {
@@ -76,7 +77,7 @@ namespace ASPNET7Proj1.Controllers
                 ExistingTag.DisplayName = tag.DisplayName;
 
                 //Save
-                bloggieDbContext.SaveChanges();
+                await bloggieDbContext.SaveChangesAsync();
 
                 //show success Notification
                 return RedirectToAction("Edit", new {id=editTagRequest.Id});
@@ -86,15 +87,13 @@ namespace ASPNET7Proj1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(EditTagRequest editTagRequest)
+        public async Task<IActionResult> Delete(EditTagRequest editTagRequest)
         {
             var tag = bloggieDbContext.Tags.Find(editTagRequest.Id);
             if(tag != null)
             {
                 bloggieDbContext.Tags.Remove(tag);
-                bloggieDbContext.SaveChanges();
-
-                //show a Success Notification
+                await bloggieDbContext.SaveChangesAsync();
                 return RedirectToAction("List");
             }
 
