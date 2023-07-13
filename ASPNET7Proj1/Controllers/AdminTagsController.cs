@@ -39,6 +39,51 @@ namespace ASPNET7Proj1.Controllers
             return View(tags);
         }
 
+        [HttpGet]
+        public IActionResult Edit(Guid Id)
+        {
+            //1 Method
+            var exTag = bloggieDbContext.Tags.Find(Id);
+            //2 Method
+            var tag = bloggieDbContext.Tags.FirstOrDefault(s=>s.Id== Id);
+            if (tag != null)
+            {
+                var editTagRequest = new EditTagRequest()
+                {
+                    Id = tag.Id,
+                    Name = tag.Name,
+                    DisplayName = tag.DisplayName
+                };
+                return View(editTagRequest);
+            }
+            return View(null);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditTagRequest editTagRequest)
+        {
+            var tag = new Models.Domain.Tags
+            {
+                Id= editTagRequest.Id,
+                Name = editTagRequest.Name,
+                DisplayName = editTagRequest.DisplayName
+            };
+            var ExistingTag = bloggieDbContext.Tags.FirstOrDefault(s => s.Id == tag.Id);
+
+            if(ExistingTag != null)
+            {
+                ExistingTag.Name = tag.Name;
+                ExistingTag.DisplayName = tag.DisplayName;
+
+                //Save
+                bloggieDbContext.SaveChanges();
+
+                //show success Notification
+                return RedirectToAction("Edit", new {id=editTagRequest.Id});
+            }
+            //show error Notification
+            return RedirectToAction("Edit", new {id=editTagRequest.Id});
+        }
 
 
 
