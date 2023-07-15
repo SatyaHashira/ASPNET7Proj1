@@ -15,7 +15,7 @@ namespace ASPNET7Proj1.Models.ViewModels
         public bool visible { get; set; }
 
         //Display Tags
-        public IEnumerable<SelectListItem> Tags { get; set; }
+        public IEnumerable<SelectListItem>? Tags { get; set; }
         //Collect Tags
         //public string SelectedTag { get; set; }  @this is for dropdown
         public string[] SelectedTag { get; set; } = Array.Empty<string>(); //this is for selcting multiple items from

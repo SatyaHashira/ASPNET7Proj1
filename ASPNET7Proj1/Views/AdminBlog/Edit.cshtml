@@ -7,7 +7,7 @@
 <div class="container">
     @if (Model != null)
     {
-        
+        <form method="post">
             <div class="mb-3">
                 <label class="form-label">Id</label>
                 <input type="text" class="form-control" id="id" asp-for="Id" readonly />
@@ -30,7 +30,20 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Featured Image Upload</label>
-                <input type="text" class="form-control" id="featuredImageUpload" asp-for="FeaturedImageUrl" />
+                <input type="file" id="featuredImageUpload" class="form-control" />
+
+                @if(Model.FeaturedImageUrl!=null)
+                {
+                    <img src="@Model.FeaturedImageUrl" id="featuredImageDisplay" style="display:block;width:300px;" />
+                }
+                else
+                {
+                    <img src="@Model.FeaturedImageUrl" id="featuredImageDisplay" style="display:none;width:300px;" />
+                }
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Featured Image URL</label>
+                <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" />
             </div>
             <div class="mb-3">
                 <label class="form-label">URL Handle</label>
@@ -57,10 +70,50 @@
                         asp-for="SelectedTag">
                 </select>
             </div>
-             
+            <div class="mb-3 d-flex">
+                <button class="btn btn-dark" type="submit">Submit</button>
+
+                <button type="submit" class="btn btn-danger ms-2" asp-area="" 
+                asp-controller="AdminBlog" asp-action="Delete">Delete</button>
+            </div>
+        </form>
     }
     else
     {
         <p>No Blog post found</p>
     }
 </div>
+
+@section Scripts{
+    <script>
+        var Editor = new FroalaEditor('#content',{
+            ImageUploadUrl:'/api/image'
+        });
+
+        const featuredUploadElement = document.getElementById('featuredImageUpload');
+        const featuredImageUrlElement = document.getElementById('featuredImageUrl');
+        const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+        async function uploadFeaturedImage(e) {
+            console.log(e.target.files[0]);
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            await fetch('/api/image', {
+                method: 'POST',
+                headers: {
+                    'Aceept': '*/*',
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    featuredImageUrlElement.value = result.link;
+                    featuredImageDisplayElement.src = result.link;
+                    featuredImageDisplayElement.style.display = 'block';
+                });
+        }
+
+
+        featuredUploadElement.addEventListener('change', uploadFeaturedImage);
+    </script>
+}

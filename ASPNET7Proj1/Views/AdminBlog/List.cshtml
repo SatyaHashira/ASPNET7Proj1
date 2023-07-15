@@ -6,39 +6,46 @@
     </div>
 </div>
 <div class="container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Heading</th>
-                <th>Tags</th>
-                <th> </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var blogPost in Model)
-            {
+    @if(Model!=null && Model.Any())
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@blogPost.Id</td>
-                    <td>@blogPost.Heading</td>
-                    <td>
-                        <div class="d-flex">
-                            @foreach (var tag in blogPost.tags)
-                            {
-                                <span class="badge bg-secondary me-1">@tag.Name</span>
-                            }
-                        </div>
-                    </td>
-                    <td>
-                        <a asp-area=""
-                        asp-controller="AdminBLog"
-                        asp-action="Edit"
-                        asp-route-id="@blogPost.Id">
-                            Edit
-                        </a>
-                    </td>
+                    <th>Id</th>
+                    <th>Heading</th>
+                    <th>Tags</th>
+                    <th> </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var blogPost in Model)
+                {
+                    <tr>
+                        <td>@blogPost.Id</td>
+                        <td>@blogPost.Heading</td>
+                        <td>
+                            <div class="d-flex">
+                                @foreach (var tag in blogPost.tags)
+                                {
+                                    <span class="badge bg-secondary me-1">@tag.Name</span>
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            <a asp-area=""
+                               asp-controller="AdminBLog"
+                               asp-action="Edit"
+                               asp-route-id="@blogPost.Id">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-danger">No blog post found!</p>
+    }
 </div>
