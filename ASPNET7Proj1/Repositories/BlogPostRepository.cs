@@ -41,6 +41,11 @@ namespace ASPNET7Proj1.Repositories
             return await bloggieDbContext.BlogPosts.Include(s => s.tags).FirstOrDefaultAsync(s => s.Id == Id);
         }
 
+        public async Task<BlogPost> GetByUrlHandleAsync(string urlHandle)
+        {
+            return await bloggieDbContext.BlogPosts.Include(s=>s.tags).FirstOrDefaultAsync(s => s.UrlHandle == urlHandle);
+        }
+
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
             var ExistingBlogPost = await bloggieDbContext.BlogPosts.Include(s => s.tags).

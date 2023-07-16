@@ -9,5 +9,6 @@ namespace ASPNET7Proj1.Repositories
         Task<BlogPost> AddAsync(BlogPost blogPost);
         Task<BlogPost?> UpdateAsync(BlogPost blogPost);
         Task<BlogPost?> DeleteAsync(Guid Id);
+        Task<BlogPost> GetByUrlHandleAsync(string urlHandle);
     }
 }
