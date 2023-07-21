@@ -1,10 +1,12 @@
 ﻿using ASPNET7Proj1.Models.Domain;
 using ASPNET7Proj1.Models.ViewModels;
 using ASPNET7Proj1.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 namespace ASPNET7Proj1.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminBlogController : Controller
     {
         private readonly ITagRepository tagRepository;
@@ -15,6 +17,8 @@ namespace ASPNET7Proj1.Controllers
             this.tagRepository = tagRepository;
             this.blogPostRepository = blogPostRepository;
         }
+
+        
         [HttpGet]
         public async Task<IActionResult> Add()
         {

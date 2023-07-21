@@ -44,9 +44,14 @@ namespace ASPNET7Proj1.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            var model = new LoginViewModel 
+            { 
+                ReturnUrl = returnUrl 
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -56,6 +61,10 @@ namespace ASPNET7Proj1.Controllers
                 false,false);
             if (signInResult != null && signInResult.Succeeded)
             {
+                if(!string .IsNullOrEmpty(loginViewModel.ReturnUrl))
+                {
+                    return Redirect(loginViewModel.ReturnUrl);
+                }
                 return RedirectToAction("Index", "Home");
             }
             //Show Errors
@@ -67,6 +76,11 @@ namespace ASPNET7Proj1.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

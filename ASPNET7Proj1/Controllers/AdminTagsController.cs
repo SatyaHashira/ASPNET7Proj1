@@ -1,11 +1,13 @@
 ﻿using ASPNET7Proj1.Data;
 using ASPNET7Proj1.Models.ViewModels;
 using ASPNET7Proj1.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASPNET7Proj1.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminTagsController : Controller
     {
         private readonly ITagRepository tagRepository;
