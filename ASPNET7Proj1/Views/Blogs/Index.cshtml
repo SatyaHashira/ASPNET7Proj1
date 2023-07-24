@@ -1,4 +1,6 @@
-﻿@model ASPNET7Proj1.Models.Domain.BlogPost
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+@model ASPNET7Proj1.Models.ViewModels.BlogPostDetailsViewModel
 
 @{
     ViewData["Title"] = Model.PageTitle;
@@ -15,7 +17,15 @@
                     <span class="text-secondary">@Model.Author</span>
                     <span class="text-secondary">@Model.PublishedDate.ToShortDateString()</span>
                 </div>
-
+                <div class="mb-3">
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <a>
+                            <i class="bi bi-hand-thumbs-up"></i>
+                        </a>
+                    }
+                    <span>@Model.totalLikes</span> Likes
+                </div>
                 <div class="mb-3 d-flex">
                     @foreach(var tag in Model.tags)
                     {

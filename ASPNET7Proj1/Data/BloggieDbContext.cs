@@ -10,6 +10,7 @@ namespace ASPNET7Proj1.Data
         }
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Models.Domain.Tags> Tags { get; set; }
+        public DbSet<BlogPostLike> BlogPostLike { get; set; }
 
         
     }

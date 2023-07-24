@@ -1,6 +1,6 @@
-﻿namespace ASPNET7Proj1.Models.Domain
+﻿namespace ASPNET7Proj1.Models.ViewModels
 {
-    public class BlogPost
+    public class BlogPostDetailsViewModel
     {
         public Guid Id { get; set; }
         public string? Heading { get; set; }
@@ -13,7 +13,6 @@
         public string? Author { get; set; }
         public bool visible { get; set; }
         public ICollection<Domain.Tags>? tags { get; set; }
-        public ICollection<BlogPostLike> likes { get; set; }
-
+        public int totalLikes { get; set; }
     }
 }
