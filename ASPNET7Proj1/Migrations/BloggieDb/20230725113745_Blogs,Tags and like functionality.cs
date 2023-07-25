@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ASPNET7Proj1.Migrations
+namespace ASPNET7Proj1.Migrations.BloggieDb
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class BlogsTagsandlikefunctionality : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,6 +45,25 @@ namespace ASPNET7Proj1.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlogPostLike",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BlogPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogPostLike", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogPostLike_BlogPosts_BlogPostId",
+                        column: x => x.BlogPostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BlogPostTags",
                 columns: table => new
                 {
@@ -69,6 +88,11 @@ namespace ASPNET7Proj1.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_BlogPostLike_BlogPostId",
+                table: "BlogPostLike",
+                column: "BlogPostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BlogPostTags_tagsId",
                 table: "BlogPostTags",
                 column: "tagsId");
@@ -77,6 +101,9 @@ namespace ASPNET7Proj1.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "BlogPostLike");
+
             migrationBuilder.DropTable(
                 name: "BlogPostTags");
 

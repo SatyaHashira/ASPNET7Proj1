@@ -4,19 +4,16 @@ using ASPNET7Proj1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ASPNET7Proj1.Migrations
+namespace ASPNET7Proj1.Migrations.BloggieDb
 {
     [DbContext(typeof(BloggieDbContext))]
-    [Migration("20230721193453_Adding Like functionality")]
-    partial class AddingLikefunctionality
+    partial class BloggieDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,10 +66,7 @@ namespace ASPNET7Proj1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BlogPost")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BlogPostId")
+                    b.Property<Guid>("BlogPostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -121,7 +115,9 @@ namespace ASPNET7Proj1.Migrations
                 {
                     b.HasOne("ASPNET7Proj1.Models.Domain.BlogPost", null)
                         .WithMany("likes")
-                        .HasForeignKey("BlogPostId");
+                        .HasForeignKey("BlogPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BlogPostTags", b =>

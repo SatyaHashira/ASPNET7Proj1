@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ASPNET7Proj1.Migrations.AuthDb
+namespace ASPNET7Proj1.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230719132114_Authentication Migrations")]
-    partial class AuthenticationMigrations
+    [Migration("20230725113558_Authentication and Authorization")]
+    partial class AuthenticationandAuthorization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,17 +169,17 @@ namespace ASPNET7Proj1.Migrations.AuthDb
                         {
                             Id = "ac7cbd6d-69e7-4cf0-960f-fd24ad941496",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c05983a9-0faf-4df8-b18f-f1f4bae0af60",
-                            Email = "superadmin@bloggie.com",
+                            ConcurrencyStamp = "6ecbed24-b912-422d-9601-b7b714a61de6",
+                            Email = "satyadalayi@bloggieDeveloper.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "SUPERADMIN@BLOGGIE.COM",
-                            NormalizedUserName = "SUPERADMIN@BLOGGIE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC+Cr3ql0MYIJz2zREvtUZUp9bIhcA2QPk19cfh3Y5FPTEBvfLsvGRBrp2e3nPattw==",
+                            NormalizedEmail = "SATYADALAYI@BLOGGIEDEVELOPER.COM",
+                            NormalizedUserName = "SATYADALAYI@BLOGGIEDEVELOPER.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMSFvKUs3I1+lZm805bBPuef4st+owaeI1/vEHCTWzSWodfuQhrXQ7MQquuFwKuz1w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "13beb621-35f4-4e3a-8114-096c6262f51f",
+                            SecurityStamp = "09a6b7c1-0d52-4b41-9bad-3bf75aa50a54",
                             TwoFactorEnabled = false,
-                            UserName = "superadmin@bloggie.com"
+                            UserName = "satyadalayi@bloggieDeveloper.com"
                         });
                 });
 

@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace ASPNET7Proj1.Migrations.AuthDb
+namespace ASPNET7Proj1.Migrations
 {
     /// <inheritdoc />
-    public partial class AuthenticationMigrations : Migration
+    public partial class AuthenticationandAuthorization : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -171,7 +171,7 @@ namespace ASPNET7Proj1.Migrations.AuthDb
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "ac7cbd6d-69e7-4cf0-960f-fd24ad941496", 0, "c05983a9-0faf-4df8-b18f-f1f4bae0af60", "superadmin@bloggie.com", false, false, null, "SUPERADMIN@BLOGGIE.COM", "SUPERADMIN@BLOGGIE.COM", "AQAAAAIAAYagAAAAEC+Cr3ql0MYIJz2zREvtUZUp9bIhcA2QPk19cfh3Y5FPTEBvfLsvGRBrp2e3nPattw==", null, false, "13beb621-35f4-4e3a-8114-096c6262f51f", false, "superadmin@bloggie.com" });
+                values: new object[] { "ac7cbd6d-69e7-4cf0-960f-fd24ad941496", 0, "6ecbed24-b912-422d-9601-b7b714a61de6", "satyadalayi@bloggieDeveloper.com", false, false, null, "SATYADALAYI@BLOGGIEDEVELOPER.COM", "SATYADALAYI@BLOGGIEDEVELOPER.COM", "AQAAAAIAAYagAAAAEMSFvKUs3I1+lZm805bBPuef4st+owaeI1/vEHCTWzSWodfuQhrXQ7MQquuFwKuz1w==", null, false, "09a6b7c1-0d52-4b41-9bad-3bf75aa50a54", false, "satyadalayi@bloggieDeveloper.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

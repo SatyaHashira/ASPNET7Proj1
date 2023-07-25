@@ -1,5 +1,6 @@
 ﻿using ASPNET7Proj1.Models.ViewModels;
 using ASPNET7Proj1.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNET7Proj1.Controllers
@@ -8,10 +9,16 @@ namespace ASPNET7Proj1.Controllers
     {
         private readonly IBlogPostRepository blogPostRepository;
         private readonly IBlogPostLikeRepository blogPostLikeRepository;
-        public BlogsController(IBlogPostRepository blogPostRepository,IBlogPostLikeRepository blogPostLikeRepository)
+        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<IdentityUser> userManager;
+        public BlogsController(IBlogPostRepository blogPostRepository,IBlogPostLikeRepository blogPostLikeRepository,
+            SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager)
         {
             this.blogPostRepository = blogPostRepository;
             this.blogPostLikeRepository = blogPostLikeRepository;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
         }
         [HttpGet]
         public async Task<IActionResult> Index(string urlHandle)
@@ -22,6 +29,12 @@ namespace ASPNET7Proj1.Controllers
             if (blogPost != null)
             {
                 var TotalLikes = await blogPostLikeRepository.GetTotalLikes(blogPost.Id);
+
+                if (signInManager.IsSignedIn(User))
+                {
+                    //Get likes for this blog for this User
+
+                }
 
                 blogPostDetailsViewModel = new BlogPostDetailsViewModel
                 {

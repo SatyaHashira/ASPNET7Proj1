@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ASPNET7Proj1.Migrations
+namespace ASPNET7Proj1.Migrations.BloggieDb
 {
     [DbContext(typeof(BloggieDbContext))]
-    [Migration("20230711191137_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230725113745_Blogs,Tags and like functionality")]
+    partial class BlogsTagsandlikefunctionality
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,6 +63,25 @@ namespace ASPNET7Proj1.Migrations
                     b.ToTable("BlogPosts");
                 });
 
+            modelBuilder.Entity("ASPNET7Proj1.Models.Domain.BlogPostLike", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BlogPostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogPostId");
+
+                    b.ToTable("BlogPostLike");
+                });
+
             modelBuilder.Entity("ASPNET7Proj1.Models.Domain.Tags", b =>
                 {
                     b.Property<Guid>("Id")
@@ -95,6 +114,15 @@ namespace ASPNET7Proj1.Migrations
                     b.ToTable("BlogPostTags");
                 });
 
+            modelBuilder.Entity("ASPNET7Proj1.Models.Domain.BlogPostLike", b =>
+                {
+                    b.HasOne("ASPNET7Proj1.Models.Domain.BlogPost", null)
+                        .WithMany("likes")
+                        .HasForeignKey("BlogPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BlogPostTags", b =>
                 {
                     b.HasOne("ASPNET7Proj1.Models.Domain.BlogPost", null)
@@ -108,6 +136,11 @@ namespace ASPNET7Proj1.Migrations
                         .HasForeignKey("tagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ASPNET7Proj1.Models.Domain.BlogPost", b =>
+                {
+                    b.Navigation("likes");
                 });
 #pragma warning restore 612, 618
         }

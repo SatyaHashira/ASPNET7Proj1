@@ -54,15 +54,15 @@ namespace ASPNET7Proj1.Data
             var superAdminId = "ac7cbd6d-69e7-4cf0-960f-fd24ad941496";
             var superAdminUser = new IdentityUser
             {
-                UserName = "superadmin@bloggie.com",
-                Email = "superadmin@bloggie.com",
-                NormalizedEmail = "superadmin@bloggie.com".ToUpper(),
-                NormalizedUserName = "superadmin@bloggie.com".ToUpper(),
+                UserName = "satyadalayi@bloggieDeveloper.com",
+                Email = "satyadalayi@bloggieDeveloper.com",
+                NormalizedEmail = "satyadalayi@bloggieDeveloper.com".ToUpper(),
+                NormalizedUserName = "satyadalayi@bloggieDeveloper.com".ToUpper(),
                 Id = superAdminId
             };
 
             superAdminUser.PasswordHash = new PasswordHasher<IdentityUser>()
-                .HashPassword(superAdminUser, "Superadmin@123");
+                .HashPassword(superAdminUser, "Satyadalayi@Developer123");
 
             builder.Entity<IdentityUser>().HasData(superAdminUser);
 
