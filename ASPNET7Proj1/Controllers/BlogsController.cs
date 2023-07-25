@@ -23,6 +23,7 @@ namespace ASPNET7Proj1.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string urlHandle)
         {
+            var liked = false;
             var blogPost = await blogPostRepository.GetByUrlHandleAsync(urlHandle);
             var blogPostDetailsViewModel = new BlogPostDetailsViewModel();
 
@@ -33,7 +34,14 @@ namespace ASPNET7Proj1.Controllers
                 if (signInManager.IsSignedIn(User))
                 {
                     //Get likes for this blog for this User
+                    var LikesForBlog =await  blogPostLikeRepository.GetLikesForBlog(blogPost.Id);
+                    var userId = userManager.GetUserId(User); 
+                    if(userId != null)
+                    {
+                        var LikeFromUser = LikesForBlog.FirstOrDefault(s=>s.UserId == Guid.Parse(userId));
+                        liked = LikeFromUser != null;
 
+                    }
                 }
 
                 blogPostDetailsViewModel = new BlogPostDetailsViewModel
@@ -50,7 +58,7 @@ namespace ASPNET7Proj1.Controllers
                     visible = blogPost.visible,
                     totalLikes = TotalLikes,
                     tags = blogPost.tags,
-
+                    Liked = liked
                 };
                
             }

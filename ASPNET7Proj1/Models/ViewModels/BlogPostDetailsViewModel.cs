@@ -14,5 +14,6 @@
         public bool visible { get; set; }
         public ICollection<Domain.Tags>? tags { get; set; }
         public int totalLikes { get; set; }
+        public bool Liked { get; set; }
     }
 }

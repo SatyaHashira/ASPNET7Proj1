@@ -19,9 +19,9 @@ namespace ASPNET7Proj1.Repositories
             return blogPostLike;
         }
 
-        public Task<IEnumerable<BlogPostLike>> GetLikesForBlog(Guid blogPostId)
+        public async Task<IEnumerable<BlogPostLike>> GetLikesForBlog(Guid blogPostId)
         {
-            throw new NotImplementedException();
+           return await bloggieDbContext.BlogPostLike.Where(s => s.BlogPostId == blogPostId).ToListAsync();
         }
 
         public async Task<int> GetTotalLikes(Guid blogPostId)
